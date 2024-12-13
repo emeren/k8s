@@ -31,10 +31,28 @@ spec:
                 secretKeyRef:
                   name: nginx-secret
                   key: password
+            - name: APP_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: app-config
+                  key: APP_NAME
+            - name: APP_ENV
+              valueFrom:
+                configMapKeyRef:
+                  name: app-config
+                  key: APP_ENV
+            - name: WELCOME_MESSAGE
+              valueFrom:
+                configMapKeyRef:
+                  name: app-config
+                  key: WELCOME_MESSAGE
           volumeMounts:
             - name: secret-volume
               mountPath: "/etc/secret"
               readOnly: true
+            - name: app-config-volume
+              configMap:
+                name: app-config
       volumes:
         - name: secret-volume
           secret:
