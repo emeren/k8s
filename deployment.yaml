@@ -51,9 +51,16 @@ spec:
               mountPath: "/etc/secret"
               readOnly: true
             - name: app-config-volume
-              configMap:
-                name: app-config
+              mountPath: "/usr/share/nginx/html/index.html"
+              subPath: index.html
+              readOnly: true
       volumes:
         - name: secret-volume
           secret:
             secretName: nginx-secret
+        - name: app-config-volume
+          configMap:
+            name: app-config
+            items:
+              - key: index.html
+                path: index.html
